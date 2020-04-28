@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 #include "TimerOne.h"
-#include <EEPROM.h>
+
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <LiquidCrystal.h>
@@ -117,7 +117,7 @@ enum menuFormat_en {
 };
 
 struct menuItem_st {
-	char *desc;
+	const char *desc;
 	void *mArg;
 	enum menuFormat_en mFormat;
 };
@@ -164,7 +164,7 @@ PARAM_SALLOC_INT16(boilTempRead, 0, PARAM_OP_DEC1 | PARAM_OP_RDONLY, -200, 1500,
 // Temperature setting for Boil kettle
 PARAM_SALLOC_INT16(boilTempSet, 0, PARAM_OP_DEC1, -200, 1500, 5)
 // Hysteresis Temperature setting for Boil kettle
-PARAM_SALLOC_INT16(boilTempHyst, 0, PARAM_OP_DEC1, -200, 1500, 1)
+//PARAM_SALLOC_INT16(boilTempHyst, 0, PARAM_OP_DEC1, -200, 1500, 1)
 // Heater power output for HLT kettle
 //PARAM_SALLOC_INT16(hltHeaterPower, 0, PARAM_OP_RDONLY, 0, 100, 10)
 // Heater power output for Boil kettle
@@ -421,9 +421,6 @@ static void appHLT_tempControlHyst(void);
 
 // SETUP - runs once.
 void setup(void) {
-  int k;
-
-  
   memset(&hltTimerOn, 0, sizeof(struct tickTimer_st));
 
   // set up the LCD's number of columns and rows: 
